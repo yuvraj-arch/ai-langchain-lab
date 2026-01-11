@@ -25,6 +25,7 @@ async def main():
             
             # List tools and convert to OpenAI format
             tools_result = await session.list_tools()
+            print(f"Tools: {tools_result.tools}")
             openai_tools = [
                 {
                     "type": "function",
@@ -37,7 +38,7 @@ async def main():
                 for tool in tools_result.tools
             ]
 
-            user_question = "What is 47 / 30?"
+            user_question = "What is 47 + 30?"
             messages = [{"role": "user", "content": user_question}]
 
             # Ask OpenAI model
@@ -59,6 +60,8 @@ async def main():
 
                     # Call MCP tool
                     result = await session.call_tool(tool_name, args)
+
+                    print(f"Tool result: {result}")
 
                     # Add tool result to history
                     messages.append({

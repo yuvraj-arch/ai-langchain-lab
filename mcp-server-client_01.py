@@ -4,7 +4,7 @@ import sys
 import json
 import os
 from mcp.client.session import ClientSession
-from mcp.client.sse import sse_client
+from mcp.client.stdio import stdio_client, StdioServerParameters
 from openai import OpenAI
 from dotenv import load_dotenv
 
@@ -75,8 +75,13 @@ class Agent:
             return response_message.content
 
 async def run_client():
-    # Connect to MCP server running via SSE 
-    async with sse_client("http://localhost:8000/sse") as (read, write):
+    # Start MCP server (running this same file as a server)
+    server = StdioServerParameters(
+        command=sys.executable,
+        args=["math-server.py"]
+    )
+
+    async with stdio_client(server) as (read, write):
         async with ClientSession(read, write) as session:
             await session.initialize()
             

@@ -1,5 +1,4 @@
 from fastmcp import FastMCP
-from typing import Any
 
 mcp = FastMCP("Math")
 
@@ -24,4 +23,4 @@ def divide(x: int, y: int) -> int:
     return x / y
 
 if __name__ == "__main__":
-    mcp.run()
+    mcp.run(transport="sse")
