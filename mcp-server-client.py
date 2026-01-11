@@ -78,7 +78,7 @@ async def run_client():
     # Start MCP server (running this same file as a server)
     server = StdioServerParameters(
         command=sys.executable,
-        args=[__file__, "server"]
+        args=["math-server.py"]
     )
 
     async with stdio_client(server) as (read, write):
